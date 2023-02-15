@@ -1,0 +1,52 @@
+---
+
+# Example usage: ansible-playbook <playbook> -Kv
+#   -K:      ask for privilege escalation password
+#   -v:      verbose mode (-vvv for more, -vvvv to enable connection debugging)
+
+- name: "Kali Linux setup, build 20230213"
+  hosts: localhost
+  gather_facts: yes
+  become: yes
+  vars:
+    admin_user: toor
+
+  tasks:
+  - name: "Installing missing packages"
+    ansible.builtin.apt:
+      name:
+        - burpsuite
+        - docker.io
+        - docker-compose
+        - golang-go
+      state: present
+
+  - name: "Editing/improving those handy aliases (1/3)"
+    ansible.builtin.lineinfile:
+      path: "/home/{{ admin_user }}/.zshrc"
+      regexp: "^alias ll"
+      line: "alias ll='ls -lhF'"
+
+  - name: "Editing/improving those handy aliases (2/3)"
+    ansible.builtin.lineinfile:
+      path: "/home/{{ admin_user }}/.zshrc"
+      regexp: "^alias lt"
+      line: "alias lt='ls -ltrhF'"
+
+  - name: "Editing/improving those handy aliases (3/3)"
+    ansible.builtin.lineinfile:
+      path: "/home/{{ admin_user }}/.zshrc"
+      regexp: "^alias la"
+      line: "alias la='ls -AltrhF'"
+
+  - name: "Creating custom directories"
+    ansible.builtin.file:
+      path: "/home/{{ admin_user }}/{{ item }}"
+      owner: "{{ admin_user }}"
+      group: "{{ admin_user }}"
+      state: directory
+      mode: "0755"
+    with_items:
+      - github
+      - scripts
+
