@@ -75,3 +75,14 @@
       regexp: '(.+)jython(.+):""'
       replace: '\1jython\2:"/home/{{ admin_user }}/Downloads/jython-standalone-2.7.3.jar"'
 
+  - name: "Download Postman archive"
+    ansible.builtin.get_url:
+      url: "https://dl.pstmn.io/download/latest/linux64"
+      dest: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
+      mode: "0644"
+
+  - name: "Unarchive Postman"
+    ansible.builtin.unarchive:
+      src: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
+      dest: "/usr/local/bin"
+
