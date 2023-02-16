@@ -26,6 +26,12 @@
         - golang-go
       state: present
 
+  - name: "Adding {{ admin_user }} to group 'docker'"
+    ansible.builtin.user:
+      name: "{{ admin_user }}"
+      groups: docker
+      append: yes
+
   - name: "Editing/improving those handy aliases (1/3)"
     ansible.builtin.lineinfile:
       path: "/home/{{ admin_user }}/.zshrc"
