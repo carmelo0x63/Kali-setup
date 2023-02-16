@@ -16,6 +16,8 @@
     ansible.builtin.apt:
       upgrade: dist
       update_cache: yes
+      autoclean: yes
+      autoremove: yes
 
   - name: "Installing missing packages"
     ansible.builtin.apt:
@@ -69,7 +71,7 @@
 
   - name: "Pre-configure Burpsuite with the Jython archive"
     ansible.builtin.replace:
-      path: "/home/{{ admin_user }}/.Burpsuite/UserConfigCommunity.json"
+      path: "/home/{{ admin_user }}/.BurpSuite/UserConfigCommunity.json"
       regexp: '(.+)jython(.+):""'
       replace: '\1jython\2:"/home/{{ admin_user }}/Downloads/jython-standalone-2.7.3.jar"'
 
