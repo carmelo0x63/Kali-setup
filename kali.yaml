@@ -4,7 +4,7 @@
 #   -K:      ask for privilege escalation password
 #   -v:      verbose mode (-vvv for more, -vvvv to enable connection debugging)
 
-- name: "Kali Linux setup, build 20230215"
+- name: "Kali Linux setup, build 20230216"
   hosts: localhost
   gather_facts: yes
   become: yes
@@ -75,14 +75,18 @@
       regexp: '(.+)jython(.+):""'
       replace: '\1jython\2:"/home/{{ admin_user }}/Downloads/jython-standalone-2.7.3.jar"'
 
-  - name: "Download Postman archive"
-    ansible.builtin.get_url:
-      url: "https://dl.pstmn.io/download/latest/linux64"
-      dest: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
-      mode: "0644"
+#  - name: "Download Postman archive"
+#    ansible.builtin.get_url:
+#      url: "https://dl.pstmn.io/download/latest/linux64"
+#      dest: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
+#      mode: "0644"
 
-  - name: "Unarchive Postman"
+#  - name: "Unarchive Postman"
+#    ansible.builtin.unarchive:
+#      src: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
+
+  - name: "Download and unarchive Postman"
     ansible.builtin.unarchive:
-      src: "/home/{{ admin_user }}/Downloads/postman-linux-x64.tar.gz"
+      src: "https://dl.pstmn.io/download/latest/linux64"
       dest: "/usr/local/bin"
-
+      remote_src: yes
