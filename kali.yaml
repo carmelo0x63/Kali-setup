@@ -61,3 +61,15 @@
       - github
       - scripts
 
+  - name: "Download Jython standalone"
+    ansible.builtin.get_url:
+      url: https://repo1.maven.org/maven2/org/python/jython-standalone/2.7.3/jython-standalone-2.7.3.jar
+      dest: "/home/{{ admin_user }}/Downloads/jython-standalone-2.7.3.jar"
+      mode: "0644"
+
+  - name: "Pre-configure Burpsuite with the Jython archive"
+    ansible.builtin.replace:
+      path: "/home/{{ admin_user }}/.Burpsuite/UserConfigCommunity.json"
+      regexp: '(.+)jython(.+):""'
+      replace: '\1jython\2:"/home/{{ admin_user }}/Downloads/jython-standalone-2.7.3.jar"'
+
