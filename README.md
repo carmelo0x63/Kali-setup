@@ -4,13 +4,20 @@ Ansible playbook to quickly setup a "disposable" Kali Linux VM
 ----
 
 1. **On the virtualization host**: Download and Deploy (ISO installer)
-- ISO file: https://cdimage.kali.org/kali-2022.4/kali-linux-2022.4-installer-amd64.iso
-- RAM: 4096, CPU: default
+- General > Name: Kali
+- OS > ISO image: https://cdimage.kali.org/kali-2022.4/kali-linux-2022.4-installer-amd64.iso
 - disk: 24GB
-- hostname: <hostname>
-- domain: <domain>
-- set user name + password
-- Software Selection > [continue]
+- CPU: 4
+- RAM: 2048
+
+  - During the install process:
+    - Language: English
+    - Location: Europe/Rome
+    - Locale: en_US.UTF-8
+    - hostname: <hostname>
+    - domain: <domain>
+    - set user name + password
+    - Software Selection > [continue]
 
 2. **Within the newly created VM**: clone github repo then run playbook
 ```
