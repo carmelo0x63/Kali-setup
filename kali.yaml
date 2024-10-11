@@ -90,3 +90,11 @@
       src: "https://dl.pstmn.io/download/latest/linux64"
       dest: "/usr/local/bin"
       remote_src: yes
+
+  - name: "Patch tightvncserver to run on localhost only"
+    ansible.builtin.lineinfile:
+      path: '/usr/bin/tightvncserver"
+#      regexp: '^Listen '
+      insertafter: '$cmd = "Xtightvnc :$displayNumber";'
+      line: $cmd .= " -localhost "
+
